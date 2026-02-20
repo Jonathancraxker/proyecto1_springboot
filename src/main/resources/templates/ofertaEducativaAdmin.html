@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <title>Oferta Educativa</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: menu"></nav>
+
+    <main>
+        <section>
+            <h1>Oferta Educativa Administrativa</h1>
+            <p>Esta es la sección de oferta educativa administrativa</p>
+                <div class="container mt-4">
+                    <div class="table-responsive shadow-sm rounded">
+                        <div class="d-flex justify-content-end">
+                            <a th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
+                                Agregar Oferta Educativa
+                            </a>
+                        </div>
+                        <table class="table table-hover align-middle">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th class="text-center">Modalidad</th>
+                                    <th class="text-center">Imagen</th>
+                                    <th class="text-center">Division</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="oferta : ${ofertas}">
+                                    <td th:text="${oferta.id}" class="fw-bold"></td>
+                                    <td th:text="${oferta.nombreOferta}"></td>
+                                    <td class="text-center" th:text="${oferta.modalidad}"></td>
+                                    <td class="text-center">
+                                        <img th:src="@{{img}(img=${oferta.imagen})}" alt="ofertaEducativa" style="width: 80px; height: 65px; object-fit: cover;" class="rounded shadow-sm"/>
+                                    </td>
+                                    <td class="text-center" th:text="${oferta.division != null ? oferta.division.nombre : '-'}"></td>
+                                    
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a th:href="@{/consola/oferta-educativa/edit/{id}(id=${oferta.id})}" 
+                                            class="btn btn-outline-warning ms-2" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
+                                            class="btn btn-outline-danger ms-2" 
+                                            onclick="return confirm('¿Estás seguro de eliminar esta oferta?')" 
+                                            title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </section>
+    </main>
+        <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>

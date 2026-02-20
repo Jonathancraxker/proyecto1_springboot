@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: menu"></nav>
+
+    <main>
+        <section id="oferta-educativa">
+            <h1>Oferta Educativa</h1>
+            <p>Esta es la sección de oferta educativa de la página web.</p>
+                <div class="container">
+                    <form th:action="@{/consola/oferta-educativa/save}" 
+                    method="post" th:object="${oferta}">
+
+                        <div class="forms-group">
+                            <!-- <label for="id">ID</label> -->
+                            <input type="hidden" id="id" th:field="*{id}" class="form-control" readonly>
+                        </div>
+                        <div class="forms-group">
+                            <label for="nombreOferta">Nombre de la Oferta</label>
+                            <input type="text" id="nombreOferta" th:field="*{nombreOferta}" class="form-control" required>
+                        </div>
+                        <div class="forms-group">
+                            <label for="modalidad">Modalidad</label>
+                            <input type="text" id="modalidad" th:field="*{modalidad}"
+                            class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagen">Imagen</label>
+                            <input type="text" id="imagen" th:field="*{imagen}" required minlength="2" class="form-control">
+                            <span th:if="${#fields.hasErrors('imagen')}" style="background-color: crimson;" th:errors="*{imagen}">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="division">División</label>
+                            <select id="division" th:field="*{division.id}" class="form-control">
+                                <option value="" selected>Selecciona una división</option>
+                                <option th:each="division : ${divisiones}"
+                                th:value="${division.id}"
+                                th:text="${division.nombre}">
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar Oferta</button>
+                    </form>
+                </div>
+        </section>
+    </main>
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>
