@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mx.edu.uteq.idgs15.ejemplo01.model.Division;
 import mx.edu.uteq.idgs15.ejemplo01.model.OfertaEducativa;
@@ -74,6 +75,7 @@ public class DivisionController {
     // return "redirect:/consola/divisiones";
     // }
 
+    
     //Método para el controlador de Division
 @PostMapping("/consola/divisiones/save")
 public String postMethodName(@Valid Division division,
@@ -83,6 +85,14 @@ return "division/divisionForm";
 }
 divisionRepo.save(division);
 return "redirect:/consola/divisiones";
+}
+
+@GetMapping("/api/division/{id}")
+@ResponseBody
+public ResponseEntity<Division> getDivision(@PathVariable Integer id) {
+Division division = divisionRepo.findById(id)
+.orElseThrow(() -> new IllegalArgumentException("Invalid division Id:" + id));
+return ResponseEntity.ok(division);
 }
 
 @PostMapping(value = "/api/division/save",

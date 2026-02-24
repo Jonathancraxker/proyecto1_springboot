@@ -44,7 +44,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="division : ${divisiones}">
+                            <tr th:id="'row-' + ${division.id}" th:each="division : ${divisiones}">
                                 <td th:text="${division.id}" class="fw-bold"></td>
                                 <td th:text="${division.nombre}"></td>
                                 <td class="text-center" th:text="${division.clave}"></td>
@@ -55,8 +55,10 @@
                                 
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a th:href="@{/consola/divisiones/edit/{id}(id=${division.id})}" 
-                                           class="btn btn-outline-warning ms-2" title="Editar">
+                                        <a  
+                                           class="btn btn-outline-warning ms-2"
+                                           th:onclick="abrirModalDivision([[${division.id}]])"
+                                           title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <a th:href="@{/consola/divisiones/delete/{id}(id=${division.id})}" 

@@ -1,20 +1,44 @@
 // Variable global para almacenar la instancia del modal
 let modalDivisionInstance;
 
-// Función para abrir la modal (agregar o editar)
 async function abrirModalDivision(id = null) {
-    try {
-        if (!modalDivisionInstance) {
-            modalDivisionInstance = new bootstrap.Modal(
-                document.getElementById('exampleModal'), {
-                }
-            );
-        }
-        limpiarFormulario();
-        modalDivisionInstance.show();
-    } catch (error) {
-        console.error('Error al abrir la modal:', error);
-    }
+try {
+limpiarFormulario();
+// Obtener el título según si es agregar o editar
+const titulo = document.getElementById('exampleModalLabel');
+
+if (id) {
+// Modo edición
+titulo.textContent = 'Editar División';
+
+// Obtener los datos de la división
+const response = await fetch(`/api/division/${id}`);
+if (!response.ok) {
+throw new Error('Error al cargar los datos');
+}
+
+const division = await response.json();
+
+// Llenar el formulario con los datos
+document.getElementById('id').value = division.id;
+document.getElementById('clave').value = division.clave;
+document.getElementById('nombre').value = division.nombre;
+document.getElementById('activo').checked = division.activo;
+} else {
+// Modo agregar
+titulo.textContent = 'Agregar División';
+document.getElementById('id').value = '';
+}
+
+if (!modalDivisionInstance) {
+modalDivisionInstance = new bootstrap.Modal(
+document.getElementById('exampleModal'));
+}
+modalDivisionInstance.show();
+
+} catch (error) {
+console.error('Error al abrir la modal:', error);
+}
 }
 
 // Función para limpiar el formulario
@@ -72,12 +96,17 @@ if (modalDivisionInstance) {
 modalDivisionInstance.hide();
 }
 
-// Recargar la página después de 500ms
-setTimeout(() => {
-window.location.reload();
-}, 500);
+const row = document.getElementById(`row-${data.id}`);
+if (row) {
+    const cells = row.querySelectorAll('td');
+    cells[1].textContent = data.clave;
+    cells[2].textContent = data.nombre;
+    cells[3].textContent = data.activo ? "Sí" : "No";
 } else {
-mostrarAlerta(result.message || 'Error al guardar la división');
+    setTimeout(() => {
+        window.location.reload();
+    }, 500);
+}
 }
 } catch (error) {
 console.error('Error:', error);
