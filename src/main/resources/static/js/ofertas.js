@@ -1,7 +1,7 @@
 // Variable global para almacenar la instancia del modal
-let modalDivisionInstance;
+let modalOfertaInstance;
 
-async function abrirModalDivision(id = null) {
+async function abrirModalOferta(id = null) {
 try {
 limpiarFormulario();
 // Obtener el título según si es agregar o editar
@@ -9,32 +9,33 @@ const titulo = document.getElementById('exampleModalLabel');
 
 if (id) {
 // Modo edición
-titulo.textContent = 'Editar División';
+titulo.textContent = 'Editar Oferta Educativa';
 
 // Obtener los datos de la división
-const response = await fetch(`/api/division/${id}`);
+const response = await fetch(`/api/oferta/${id}`);
 if (!response.ok) {
 throw new Error('Error al cargar los datos');
 }
 
-const division = await response.json();
+const oferta = await response.json();
 
 // Llenar el formulario con los datos
-document.getElementById('id').value = division.id;
-document.getElementById('clave').value = division.clave;
-document.getElementById('nombre').value = division.nombre;
-document.getElementById('activo').checked = division.activo;
+document.getElementById('id').value = oferta.id;
+document.getElementById('nombreOferta').value = oferta.nombreOferta;
+document.getElementById('modalidad').value = oferta.modalidad;
+document.getElementById('imagen').value = oferta.imagen;
+document.getElementById('division').value = oferta.division ? oferta.division.id : '';
 } else {
 // Modo agregar
-titulo.textContent = 'Agregar División';
+titulo.textContent = 'Agregar Oferta Educativa';
 document.getElementById('id').value = '';
 }
 
-if (!modalDivisionInstance) {
-modalDivisionInstance = new bootstrap.Modal(
+if (!modalOfertaInstance) {
+modalOfertaInstance = new bootstrap.Modal(
 document.getElementById('exampleModal'));
 }
-modalDivisionInstance.show();
+modalOfertaInstance.show();
 
 } catch (error) {
 console.error('Error al abrir la modal:', error);
@@ -43,7 +44,7 @@ console.error('Error al abrir la modal:', error);
 
 // Función para limpiar el formulario
 function limpiarFormulario() {
-    const form = document.getElementById('divisonForm');
+    const form = document.getElementById('ofertaForm');
     if (form) {
         form.reset();
         form.classList.remove('was-validated');
@@ -51,11 +52,11 @@ function limpiarFormulario() {
     }
 }
 
-// Función para guardar la división
-async function guardarDivision(event) {
+// Función para guardar la oferta educativa
+async function guardarOfertaEducativa(event) {
     event.preventDefault();
 // Validar el formulario
-const form = document.getElementById('divisonForm');
+const form = document.getElementById('ofertaForm');
 
 form.classList.add('was-validated');
 
@@ -71,12 +72,13 @@ const formData = new FormData(form);
 console.log('-->FormData:', Object.fromEntries(formData.entries()));
 const data = {
 id: formData.get('id') ? parseInt(formData.get('id')) : "null",
-clave: formData.get('clave'),
-nombre: formData.get('nombre'),
-activo: document.getElementById('activo').checked
+nombreOferta: formData.get('nombreOferta'),
+modalidad: formData.get('modalidad'),
+imagen: formData.get('imagen'),
+division: formData.get('division') ? { id: parseInt(formData.get('division')) } : null
 };
 
-const response = await fetch('/api/division/save', {
+const response = await fetch('/api/oferta/save', {
 method: 'POST',
 headers: {
 'Content-Type': 'application/json',
@@ -92,16 +94,22 @@ const result = await response.json();
 
 if (result.success) {
 // Cerrar la modal
-if (modalDivisionInstance) {
-modalDivisionInstance.hide();
+if (modalOfertaInstance) {
+modalOfertaInstance.hide();
 }
 
 const row = document.getElementById(`row-${data.id}`);
 if (row) {
     const cells = row.querySelectorAll('td');
-    cells[1].textContent = data.nombre;
-    cells[2].textContent = data.clave;
-    cells[3].textContent = data.activo ? "Sí" : "No";
+    cells[1].textContent = data.nombreOferta;
+    cells[2].textContent = data.modalidad;
+    const img = cells[3].querySelector('img');
+        if (img) {
+            img.src = data.imagen;
+        }
+    const selectDivision = document.getElementById('division');
+    const nombreDivision = selectDivision.options[selectDivision.selectedIndex].text;
+    cells[4].textContent = nombreDivision;
 } else {
     setTimeout(() => {
         window.location.reload();

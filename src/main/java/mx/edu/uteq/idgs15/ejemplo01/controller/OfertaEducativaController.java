@@ -2,12 +2,16 @@ package mx.edu.uteq.idgs15.ejemplo01.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mx.edu.uteq.idgs15.ejemplo01.model.OfertaEducativa;
 import mx.edu.uteq.idgs15.ejemplo01.repository.DivisionRepository;
@@ -58,6 +62,7 @@ public class OfertaEducativaController {
     public String ofertaEducativaAdmin(Model model){
         List<OfertaEducativa> ofertas = repo.findAll();
             model.addAttribute("ofertas", ofertas);
+            model.addAttribute("divisiones", divisionRepo.findAll());
         return "ofertaEducativaAdmin";
     }
 
@@ -74,86 +79,6 @@ public class OfertaEducativaController {
         
         List<OfertaEducativa> ofertas = repo.findAll();
             model.addAttribute("ofertas", ofertas);
-        // if (ofertas.isEmpty()) {
-
-        // OfertaEducativa oferta4 = new OfertaEducativa();
-        // oferta4.setNombreOferta("Ingeniería Ambiental y Sustentabilidad");
-        // oferta4.setModalidad("");
-        // oferta4.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LIAS.png");
-        // ofertas.add(oferta4);
-
-        // OfertaEducativa oferta5 = new OfertaEducativa();
-        // oferta5.setNombreOferta("Agricultura Sustentable y Protegida");
-        // oferta5.setModalidad("");
-        // oferta5.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LTII.png");
-        // ofertas.add(oferta5);
-
-        // OfertaEducativa oferta6 = new OfertaEducativa();
-        // oferta6.setNombreOferta("Licenciatura en Administración");
-        // oferta6.setModalidad("");
-        // oferta6.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LA.png");
-        // ofertas.add(oferta6);
-
-        // OfertaEducativa oferta7 = new OfertaEducativa();
-        // oferta7.setNombreOferta("Licenciatura en Negocios y en Mercadotecnia");
-        // oferta7.setModalidad("");
-        // oferta7.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LNM.png");
-        // ofertas.add(oferta7);
-
-        // OfertaEducativa oferta8 = new OfertaEducativa();
-        // oferta8.setNombreOferta("Ingenieria en Logistica");
-        // oferta8.setModalidad("");
-        // oferta8.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LTII.png");
-        // ofertas.add(oferta8);
-
-        // OfertaEducativa oferta9 = new OfertaEducativa();
-        // oferta9.setNombreOferta("Licenciatura en Contaduria");
-        // oferta9.setModalidad("Modalidad vespertina y mixta");
-        // oferta9.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/contaduria.png");
-        // ofertas.add(oferta9);
-
-        // OfertaEducativa oferta10 = new OfertaEducativa();
-        // oferta10.setNombreOferta("Ingenieria en mantenimiento Industrial");
-        // oferta10.setModalidad("");
-        // oferta10.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LIMI.png");
-        // ofertas.add(oferta10);
-
-        // OfertaEducativa oferta11 = new OfertaEducativa();
-        // oferta11.setNombreOferta("Ingenieria en Nanotecnologia");
-        // oferta11.setModalidad("");
-        // oferta11.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LIN.png");
-        // ofertas.add(oferta11);
-
-        // OfertaEducativa oferta12 = new OfertaEducativa();
-        // oferta12.setNombreOferta("Ingenieria industrial");
-        // oferta12.setModalidad("");
-        // oferta12.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LII.png");
-        // ofertas.add(oferta12);
-
-        // OfertaEducativa oferta13 = new OfertaEducativa();
-        // oferta13.setNombreOferta("Ingenieria Mecanica");
-        // oferta13.setModalidad("");
-        // oferta13.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LIM.png");
-        // ofertas.add(oferta13);
-
-        // OfertaEducativa oferta14 = new OfertaEducativa();
-        // oferta14.setNombreOferta("Ingenieria Mecanica Automotriz");
-        // oferta14.setModalidad("");
-        // oferta14.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/mecanica.png");
-        // ofertas.add(oferta14);
-
-        // OfertaEducativa oferta15 = new OfertaEducativa();
-        // oferta15.setNombreOferta("Ingenieria en Microelectrónica y Semiconductores");
-        // oferta15.setModalidad("");
-        // oferta15.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LIMI.png");
-        // ofertas.add(oferta15);
-
-        // OfertaEducativa oferta16 = new OfertaEducativa();
-        // oferta16.setNombreOferta("Licenciatura en Educación");
-        // oferta16.setModalidad("en Enseñanza del idioma inglés");
-        // oferta16.setImagen("https://www.uteq.edu.mx/Images/OfertaEducativa/LE.png");
-        // ofertas.add(oferta16);
-
         return "ofertaEducativa";
     }
 
@@ -178,6 +103,35 @@ public class OfertaEducativaController {
     return "redirect:/consola/oferta-educativa";
     }
 
+    @GetMapping("/api/oferta/{id}")
+    @ResponseBody
+    public ResponseEntity<OfertaEducativa> getOferta(@PathVariable Integer id) {
+    OfertaEducativa oferta = repo.findById(id)
+    .orElseThrow(() -> new IllegalArgumentException("Invalid oferta Id:" + id));
+    return ResponseEntity.ok(oferta);
+    }
 
+    @PostMapping(value = "/api/oferta/save",
+    consumes = "application/json",
+    produces = "application/json"
+    )
+    public ResponseEntity<?> saveOfertaAsync(@Valid @RequestBody OfertaEducativa oferta, Errors errores) {
+    if (errores.hasErrors()) {
+    return ResponseEntity.badRequest()
+    .body(java.util.Map.of("success", false, "message", "Errores de validación"));
+    }
+
+    try {
+    OfertaEducativa savedOferta = repo.save(oferta);
+    return ResponseEntity.ok(java.util.Map.of(
+    "success", true,
+    "message", "Oferta Educativa guardada correctamente",
+    "id", savedOferta.getId()
+    ));
+    } catch (Exception e) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    .body(java.util.Map.of("success", false, "message", "Error al guardar la oferta educativa"));
+    }
+    }
 
     }

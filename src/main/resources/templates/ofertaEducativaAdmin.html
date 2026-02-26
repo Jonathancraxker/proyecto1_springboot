@@ -22,10 +22,17 @@
                 <div class="container mt-4">
                     <div class="table-responsive shadow-sm rounded">
                         <div class="d-flex justify-content-end">
-                            <a th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
-                                Agregar Oferta Educativa
-                            </a>
-                        </div>
+                        <button
+                            onclick="abrirModalOferta()"
+                            type="button" 
+                            class="btn btn-outline-secondary ms-2 mb-3"
+                            >
+                            Agregar
+                            </button>
+                        <a th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
+                                <i class="bi bi-plus-circle me-1"></i> Agregar Oferta Educativa
+                        </a>
+                    </div>
                         <table class="table table-hover align-middle">
                             <thead class="table-secondary">
                                 <tr>
@@ -38,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="oferta : ${ofertas}">
+                                <tr th:id="'row-' + ${oferta.id}" th:each="oferta : ${ofertas}">
                                     <td th:text="${oferta.id}" class="fw-bold"></td>
                                     <td th:text="${oferta.nombreOferta}"></td>
                                     <td class="text-center" th:text="${oferta.modalidad}"></td>
@@ -49,8 +56,10 @@
                                     
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <a th:href="@{/consola/oferta-educativa/edit/{id}(id=${oferta.id})}" 
-                                            class="btn btn-outline-warning ms-2" title="Editar">
+                                            <a  
+                                            class="btn btn-outline-warning ms-2"
+                                            th:onclick="abrirModalOferta([[${oferta.id}]])"
+                                            title="Editar">
                                             <i class="bi bi-pencil"></i>
                                             </a>
                                             <a th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
@@ -68,10 +77,56 @@
                 </div>
         </section>
     </main>
-        <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="ofertaForm" class="needs-validation" novalidate>
+<div class="mb-3">
+<input type='hidden' id='id' name='id'>
+</div>
+<div class="mb-3">
+<label for="nombreOferta" class="form-label">Nombre de la oferta</label>
+<input type="text" class="form-control" id="nombreOferta" name="nombreOferta" placeholder="Ingrese el nombre de la oferta" required>
+<div class="invalid-feedback">Por favor ingrese el nombre de la oferta.</div>
+</div>
+<div class="mb-3">
+<label for="modalidad" class="form-label">Modalidad</label>
+<input type="text" class="form-control" id="modalidad" name="modalidad" placeholder="Ingrese el nombre de la modalidad">
+</div>
+<div class="mb-3">
+<label for="imagen" class="form-label">Imagen</label>
+<input type="text" class="form-control" id="imagen" name="imagen" placeholder="Ingrese la URL de la imagen" required>
+<div class="invalid-feedback">Por favor ingrese la URL de la imagen.</div>
+</div>
+<div class="mb-3">
+<label for="division" class="form-label">División</label>
+<select id="division" name="division" class="form-control" required>
+    <option value="" selected>Selecciona una división</option>
+    <option th:each="division : ${divisiones}"
+            th:value="${division.id}"
+            th:text="${division.nombre}">
+    </option>
+</select>
+<div class="invalid-feedback">Por favor seleccione una división.</div>
+</div>
+<div id="alertaError" class="alert alert-danger d-none" role="alert"></div>
+<div class="modal-footer">
+<button type="submit" class="btn btn-primary" onclick="guardarOfertaEducativa(event)">Guardar</button>
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+</div>
+</form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     ></script>
+    <script th:src="@{/js/ofertas.js}"></script>
 </body>
 </html>
