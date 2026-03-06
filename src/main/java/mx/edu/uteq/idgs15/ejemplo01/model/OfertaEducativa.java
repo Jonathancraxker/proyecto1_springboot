@@ -1,5 +1,7 @@
 package mx.edu.uteq.idgs15.ejemplo01.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,7 @@ public class OfertaEducativa {
 
     @ManyToOne
     @JoinColumn(name = "id_division")
+    // @JsonIgnore
     private Division division;
 
 }
