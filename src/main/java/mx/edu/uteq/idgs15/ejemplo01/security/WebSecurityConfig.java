@@ -28,6 +28,10 @@ public class WebSecurityConfig {
                .password(passwordEncoder().encode("admin"))
                .roles("ADMIN", "USER")
                .build());
+        manager.createUser(User.withUsername("cordinador")
+               .password(passwordEncoder().encode("cordinador"))
+               .roles("CORDINADOR", "USER")
+               .build());
         return manager;
     }
 }
