@@ -55,13 +55,14 @@
                                 
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a  
+                                        <a sec:authorize="hasRole('ADMIN')" 
                                            class="btn btn-outline-warning ms-2"
                                            th:onclick="abrirModalDivision([[${division.id}]])"
                                            title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a th:href="@{/consola/divisiones/delete/{id}(id=${division.id})}" 
+                                        <a sec:authorize="hasRole('ADMIN')"
+                                            th:href="@{/consola/divisiones/delete/{id}(id=${division.id})}" 
                                            class="btn btn-outline-danger ms-2" 
                                            onclick="return confirm('¿Estás seguro de eliminar esta división?')" 
                                            title="Eliminar">
@@ -82,7 +83,7 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div sec:authorize="hasRole('ADMIN')" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

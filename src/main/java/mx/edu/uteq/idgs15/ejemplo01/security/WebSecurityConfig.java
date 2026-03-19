@@ -24,13 +24,13 @@ public class WebSecurityConfig {
                .password(passwordEncoder().encode("123456"))
                .roles("USER")
                .build());
-        manager.createUser(User.withUsername("admin")
-               .password(passwordEncoder().encode("admin"))
-               .roles("ADMIN", "USER")
-               .build());
         manager.createUser(User.withUsername("cordinador")
                .password(passwordEncoder().encode("cordinador"))
                .roles("CORDINADOR", "USER")
+               .build());
+        manager.createUser(User.withUsername("admin")
+               .password(passwordEncoder().encode("admin"))
+               .roles("ADMIN", "USER")
                .build());
         return manager;
     }

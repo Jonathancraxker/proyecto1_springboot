@@ -14,7 +14,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests((authz) -> {
         authz.requestMatchers("/", "/oferta-educativa", "/login", "/adm", "/other").permitAll()
-        .requestMatchers("/consola/divisiones").hasAnyRole("ADMIN", "CORDINADOR")
+        .requestMatchers("/consola/divisiones/**").hasAnyRole("ADMIN", "CORDINADOR")
         .requestMatchers("/consola/oferta-educativa", "/consola/oferta-educativa/add").hasRole("ADMIN")
         
             .anyRequest().authenticated();
