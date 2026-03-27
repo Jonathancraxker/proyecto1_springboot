@@ -23,13 +23,14 @@
                     <div class="table-responsive shadow-sm rounded">
                         <div class="d-flex justify-content-end">
                         <button
+                            sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')"
                             onclick="abrirModalOferta()"
                             type="button" 
                             class="btn btn-outline-secondary ms-2 mb-3"
                             >
                             Agregar
                             </button>
-                        <a th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
+                        <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
                                 <i class="bi bi-plus-circle me-1"></i> Agregar Oferta Educativa
                         </a>
                     </div>
@@ -56,13 +57,13 @@
                                     
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <a  
+                                            <a  sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')"
                                             class="btn btn-outline-warning ms-2"
                                             th:onclick="abrirModalOferta([[${oferta.id}]])"
                                             title="Editar">
                                             <i class="bi bi-pencil"></i>
                                             </a>
-                                            <a th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
+                                            <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
                                             class="btn btn-outline-danger ms-2" 
                                             onclick="return confirm('¿Estás seguro de eliminar esta oferta?')" 
                                             title="Eliminar">
@@ -78,7 +79,7 @@
         </section>
     </main>
     
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

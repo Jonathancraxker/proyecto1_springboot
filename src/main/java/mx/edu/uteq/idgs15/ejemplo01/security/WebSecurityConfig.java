@@ -21,16 +21,24 @@ public class WebSecurityConfig {
     public UserDetailsService userDetailsService() throws Exception {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("user")
-               .password(passwordEncoder().encode("123456"))
+               .password(passwordEncoder().encode("user"))
                .roles("USER")
                .build());
         manager.createUser(User.withUsername("cordinador")
                .password(passwordEncoder().encode("cordinador"))
-               .roles("CORDINADOR", "USER")
+               .roles("CORDINADOR")
                .build());
         manager.createUser(User.withUsername("admin")
                .password(passwordEncoder().encode("admin"))
                .roles("ADMIN", "USER")
+               .build());
+        manager.createUser(User.withUsername("rector")
+               .password(passwordEncoder().encode("rector"))
+               .roles("RECTOR")
+               .build());
+        manager.createUser(User.withUsername("editor")
+               .password(passwordEncoder().encode("editor"))
+               .roles("EDITOR")
                .build());
         return manager;
     }
