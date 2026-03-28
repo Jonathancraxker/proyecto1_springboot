@@ -90,7 +90,7 @@ async function guardarMision(event) {
                 cells[7].innerHTML = `<span class="${data.activo ? 'badge bg-success' : 'badge bg-secondary'}">${data.activo ? 'Activo' : 'Inactivo'}</span>`;
 
                 row.classList.add('table-info');
-                setTimeout(() => row.classList.remove('table-info'), 1500);
+                setTimeout(() => row.classList.remove('table-info'), 900);
             } else {
                 window.location.reload();
             }

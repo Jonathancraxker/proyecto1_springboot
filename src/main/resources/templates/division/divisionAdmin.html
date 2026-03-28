@@ -18,7 +18,6 @@
             <h1>Gestión de Divisiones</h1>
             <p>Sección administrativa para el control de divisiones académicas.</p>
             
-            <div class="container mt-4">
                 <div class="table-responsive shadow-sm rounded">
                     <div class="d-flex justify-content-end">
                         <button
@@ -35,48 +34,49 @@
                         </a>
                     </div>
                     
-                    <table class="table table-hover align-middle">
-                        <thead class="table-secondary">
-                            <tr>
-                                <th style="width: 15%;">ID</th>
-                                <th>Nombre - División</th>
-                                <th class="text-center">Clave</th>
-                                <th class="text-center">Activa</th>
-                                <th class="text-center" style="width: 20%;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:id="'row-' + ${division.id}" th:each="division : ${divisiones}">
-                                <td th:text="${division.id}" class="fw-bold"></td>
-                                <td th:text="${division.nombre}"></td>
-                                <td class="text-center" th:text="${division.clave}"></td>
-                                <td class="text-center">
-                                    <span th:if="${division.activo}" class="badge bg-success">Sí</span>
-                                    <span th:if="${!division.activo}" class="badge bg-danger">No</span>
-                                </td>
-                                
-                                <td class="text-center">
-                                    <div class="btn-group" role="group">
-                                        <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')" 
-                                           class="btn btn-outline-warning ms-2"
-                                           th:onclick="abrirModalDivision([[${division.id}]])"
-                                           title="Editar">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" 
-                                            th:href="@{/consola/divisiones/delete/{id}(id=${division.id})}" 
-                                           class="btn btn-outline-danger ms-2" 
-                                           onclick="return confirm('¿Estás seguro de eliminar esta división?')" 
-                                           title="Eliminar">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive shadow-sm rounded">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 15%;">ID</th>
+                                    <th>Nombre - División</th>
+                                    <th class="text-center">Clave</th>
+                                    <th class="text-center">Activa</th>
+                                    <th class="text-center" style="width: 20%;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:id="'row-' + ${division.id}" th:each="division : ${divisiones}">
+                                    <td th:text="${division.id}" class="fw-bold"></td>
+                                    <td th:text="${division.nombre}"></td>
+                                    <td class="text-center" th:text="${division.clave}"></td>
+                                    <td class="text-center">
+                                        <span th:if="${division.activo}" class="badge bg-success">Sí</span>
+                                        <span th:if="${!division.activo}" class="badge bg-danger">No</span>
+                                    </td>
+                                    
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')" 
+                                            class="btn btn-outline-warning ms-2"
+                                            th:onclick="abrirModalDivision([[${division.id}]])"
+                                            title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" 
+                                                th:href="@{/consola/divisiones/delete/{id}(id=${division.id})}" 
+                                            class="btn btn-outline-danger ms-2" 
+                                            onclick="return confirm('¿Estás seguro de eliminar esta división?')" 
+                                            title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
         </section>
     </main>
 

@@ -15,65 +15,62 @@
 <body>
     <nav th:replace="fragments/fragment :: menu"></nav>
 
-    <main>
+    <main class="container mt-5">
         <section>
             <h1>Oferta Educativa Administrativa</h1>
-            <p>Esta es la sección de oferta educativa administrativa</p>
-                <div class="container mt-4">
-                    <div class="table-responsive shadow-sm rounded">
-                        <div class="d-flex justify-content-end">
-                        <button
-                            sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')"
-                            onclick="abrirModalOferta()"
-                            type="button" 
-                            class="btn btn-outline-secondary ms-2 mb-3"
-                            >
-                            Agregar
-                            </button>
-                        <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2 mb-3" title="Agregar">
-                                <i class="bi bi-plus-circle me-1"></i> Agregar Oferta Educativa
-                        </a>
-                    </div>
-                        <table class="table table-hover align-middle">
-                            <thead class="table-secondary">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th class="text-center">Modalidad</th>
-                                    <th class="text-center">Imagen</th>
-                                    <th class="text-center">Division</th>
-                                    <th class="text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:id="'row-' + ${oferta.id}" th:each="oferta : ${ofertas}">
-                                    <td th:text="${oferta.id}" class="fw-bold"></td>
-                                    <td th:text="${oferta.nombreOferta}"></td>
-                                    <td class="text-center" th:text="${oferta.modalidad}"></td>
-                                    <td class="text-center">
-                                        <img th:src="@{{img}(img=${oferta.imagen})}" alt="ofertaEducativa" style="width: 80px; height: 65px; object-fit: cover;" class="rounded shadow-sm"/>
-                                    </td>
-                                    <td class="text-center" th:text="${oferta.division != null ? oferta.division.nombre : '-'}"></td>
-                                    
-                                    <td class="text-center">
-                                        <div class="btn-group" role="group">
-                                            <a  sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')"
-                                            class="btn btn-outline-warning ms-2"
-                                            th:onclick="abrirModalOferta([[${oferta.id}]])"
-                                            title="Editar">
-                                            <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
-                                            class="btn btn-outline-danger ms-2" 
-                                            onclick="return confirm('¿Estás seguro de eliminar esta oferta?')" 
-                                            title="Eliminar">
-                                            <i class="bi bi-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <p>Sección administrativa para el control de la oferta educativa.</p>
+            
+            <div class="d-flex justify-content-end mb-3">
+                <button sec:authorize="hasAnyRole('ADMIN')" onclick="abrirModalOferta()" type="button" class="btn btn-outline-secondary ms-2">
+                    <i class="bi bi-plus-circle"></i> Agregar
+                </button>
+                <a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/consola/oferta-educativa/add}" class="btn btn-outline-success ms-2">
+                    <i class="bi bi-plus-circle"></i> Agregar por Formulario
+                </a>
+            </div>
+
+                        <div class="table-responsive shadow-sm rounded">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th class="text-center">Modalidad</th>
+                                        <th class="text-center">Imagen</th>
+                                        <th class="text-center">Division</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:id="'row-' + ${oferta.id}" th:each="oferta : ${ofertas}">
+                                        <td th:text="${oferta.id}" class="fw-bold"></td>
+                                        <td th:text="${oferta.nombreOferta}"></td>
+                                        <td class="text-center" th:text="${oferta.modalidad}"></td>
+                                        <td class="text-center">
+                                            <img th:src="@{{img}(img=${oferta.imagen})}" alt="ofertaEducativa" style="width: 80px; height: 65px; object-fit: cover;" class="rounded shadow-sm"/>
+                                        </td>
+                                        <td class="text-center" th:text="${oferta.division != null ? oferta.division.nombre : '-'}"></td>
+                                        
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group">
+                                                <a  sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR', 'EDITOR')"
+                                                class="btn btn-outline-warning ms-2"
+                                                th:onclick="abrirModalOferta([[${oferta.id}]])"
+                                                title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a sec:authorize="hasAnyRole('ADMIN', 'CORDINADOR')" th:href="@{/consola/oferta-educativa/delete/{id}(id=${oferta.id})}" 
+                                                class="btn btn-outline-danger ms-2" 
+                                                onclick="return confirm('¿Estás seguro de eliminar esta oferta?')" 
+                                                title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         </section>

@@ -38,19 +38,25 @@
               <ul class="dropdown-menu">
                 <li sec:authorize="hasAnyRole('ADMIN', 'RECTOR', 'EDITOR')">
                   <a class="dropdown-item" href="/consola/misiones"
-                    >Administrar Misión</a
+                    >Gestión - Misión</a
                   >
                 </li>
 
                 <li sec:authorize="hasAnyRole('ADMIN', 'EDITOR', 'CORDINADOR')">
                   <a class="dropdown-item" href="/consola/oferta-educativa"
-                    >Administrar Ofertas</a
+                    >Gestión - Ofertas</a
                   >
                 </li>
 
                 <li sec:authorize="hasAnyRole('ADMIN', 'EDITOR', 'CORDINADOR')">
                   <a class="dropdown-item" href="/consola/divisiones"
-                    >Administrar Divisiones</a
+                    >Gestión - Divisiones</a
+                  >
+                </li>
+
+                <li sec:authorize="hasAnyRole('ADMIN', 'EDITOR', 'RECTOR')">
+                  <a class="dropdown-item" href="/consola/directorio"
+                    >Gestión - Directorio</a
                   >
                 </li>
 
@@ -86,6 +92,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/mision">Misión</a></li>
+                <li><a class="dropdown-item" href="/directorio">Directorio</a></li>
                 <li>
                   <a class="dropdown-item" href="/oferta-educativa"
                     >Oferta Educativa</a

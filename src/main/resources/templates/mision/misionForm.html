@@ -14,59 +14,63 @@
 <body>
     <nav th:replace="fragments/fragment :: menu"></nav>
 
-    <main>
+    <main class="container mt-5">
         <section id="misiones-institucionales">
             <h1>Misiones Institucionales</h1>
             <p>Esta es la sección de misiones institucionales de la página web.</p>
-                <div class="container">
-<form th:action="@{/consola/misiones/save}" method="post" th:object="${misionObj}">
+            <hr>
 
-    <div class="forms-group">
-        <input type="hidden" id="id" th:field="*{id}" readonly>
-    </div>
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <form th:action="@{/consola/misiones/save}" method="post" th:object="${misionObj}">
 
-    <div class="forms-group mb-3">
-        <label for="mision" class="form-label">Misión</label>
-        <textarea id="mision" th:field="*{mision}" class="form-control" rows="3" required></textarea>
-        <span th:if="${#fields.hasErrors('mision')}" class="text-danger" th:errors="*{mision}"></span>
-    </div>
+                            <div class="forms-group">
+                                <input type="hidden" id="id" th:field="*{id}" readonly>
+                            </div>
 
-    <div class="forms-group mb-3">
-        <label for="vision" class="form-label">Visión</label>
-        <textarea id="vision" th:field="*{vision}" class="form-control" rows="3" required></textarea>
-        <span th:if="${#fields.hasErrors('vision')}" class="text-danger" th:errors="*{vision}"></span>
-    </div>
-    <div class="forms-group mb-3">
-    <label for="politica" class="form-label">Política</label>
-    <textarea id="politica" th:field="*{politica}" class="form-control" rows="2" required></textarea>
-    <span th:if="${#fields.hasErrors('politica')}" class="text-danger" th:errors="*{politica}"></span>
-    </div>
+                            <div class="forms-group mb-3">
+                                <label for="mision" class="form-label">Misión</label>
+                                <textarea id="mision" th:field="*{mision}" class="form-control" rows="3" required></textarea>
+                                <span th:if="${#fields.hasErrors('mision')}" class="text-danger" th:errors="*{mision}"></span>
+                            </div>
 
-    <div class="forms-group mb-3">
-        <label for="objetivos" class="form-label">Objetivos</label>
-        <textarea id="objetivos" th:field="*{objetivos}" class="form-control" rows="2" required></textarea>
-        <span th:if="${#fields.hasErrors('objetivos')}" class="text-danger" th:errors="*{objetivos}"></span>
-    </div>
+                            <div class="forms-group mb-3">
+                                <label for="vision" class="form-label">Visión</label>
+                                <textarea id="vision" th:field="*{vision}" class="form-control" rows="3" required></textarea>
+                                <span th:if="${#fields.hasErrors('vision')}" class="text-danger" th:errors="*{vision}"></span>
+                            </div>
+                            <div class="forms-group mb-3">
+                            <label for="politica" class="form-label">Política</label>
+                            <textarea id="politica" th:field="*{politica}" class="form-control" rows="2" required></textarea>
+                            <span th:if="${#fields.hasErrors('politica')}" class="text-danger" th:errors="*{politica}"></span>
+                            </div>
 
-    <div class="forms-group mb-3">
-        <label for="valores" class="form-label">Valores</label>
-        <textarea id="valores" th:field="*{valores}" class="form-control" rows="2" required></textarea>
-        <span th:if="${#fields.hasErrors('valores')}" class="text-danger" th:errors="*{valores}"></span>
-    </div>
+                            <div class="forms-group mb-3">
+                                <label for="objetivos" class="form-label">Objetivos</label>
+                                <textarea id="objetivos" th:field="*{objetivos}" class="form-control" rows="2" required></textarea>
+                                <span th:if="${#fields.hasErrors('objetivos')}" class="text-danger" th:errors="*{objetivos}"></span>
+                            </div>
 
-    <div class="forms-group mb-3">
-        <label for="fecha" class="form-label">Fecha</label>
-        <input type="date" id="fecha" th:field="*{fecha}" class="form-control" placeholder="YYYY-MM-DD" required>
-    </div>
+                            <div class="forms-group mb-3">
+                                <label for="valores" class="form-label">Valores</label>
+                                <textarea id="valores" th:field="*{valores}" class="form-control" rows="2" required></textarea>
+                                <span th:if="${#fields.hasErrors('valores')}" class="text-danger" th:errors="*{valores}"></span>
+                            </div>
 
-    <div class="form-check mb-3">
-        <input type="checkbox" id="activo" th:field="*{activo}" class="form-check-input">
-        <label for="activo" class="form-check-label">Establecer como Activo</label>
-    </div>
+                            <div class="forms-group mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" id="fecha" th:field="*{fecha}" class="form-control" placeholder="YYYY-MM-DD" required>
+                            </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Guardar Misión</button>
-    <a th:href="@{/consola/misiones}" class="btn btn-secondary mt-3">Cancelar</a>
-</form>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" id="activo" th:field="*{activo}" class="form-check-input">
+                                <label for="activo" class="form-check-label">Establecer como Activo</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-3">Guardar Misión</button>
+                            <a th:href="@{/consola/misiones}" class="btn btn-secondary mt-3">Cancelar</a>
+                        </form>
+                    </div>
                 </div>
         </section>
     </main>

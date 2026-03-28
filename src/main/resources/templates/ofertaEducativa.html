@@ -15,11 +15,11 @@
 <body>
     <nav th:replace="fragments/fragment :: menu"></nav>
 
-    <main>
+    <main class="container mt-5">
         <section>
             <h1>Oferta Educativa</h1>
             <p>Esta es la sección de oferta educativa de la página web.</p>
-                <div class="container">
+            
                     <div class="row">
                         <div class="col-12 col-md-6 mb-4" th:each="oferta : ${ofertas}">
                             <div class="card h-100 shadow-sm">
@@ -41,7 +41,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
         </section>
     </main>
     

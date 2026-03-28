@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Administración del Directorio</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/fragment :: menu}"></nav>
+
+    <main class="container mt-5">
+        <section>
+            <h1>Gestión de Directorio UTEQ</h1>
+            <p>Sección para el control del personal institucional, cargos y medios de contacto.</p>
+            
+            <div class="d-flex justify-content-end mb-3">
+                <button sec:authorize="hasAnyRole('ADMIN')" onclick="abrirModalDirectorio()" type="button" class="btn btn-outline-secondary ms-2">
+                    <i class="bi bi-plus-circle"></i> Agregar
+                </button>
+                <a sec:authorize="hasAnyRole('ADMIN')" th:href="@{/consola/directorio/add}" class="btn btn-outline-success ms-2">
+                    <i class="bi bi-plus-circle"></i> Agregar por Formulario
+                </a>
+            </div>
+
+            <div class="table-responsive shadow-sm rounded">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Cargo</th>
+                            <th>Correo</th>
+                            <th>Extensión</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:id="'row-' + ${p.id}" th:each="p : ${personas}">
+                            <td th:text="${p.id}" class="fw-bold"></td>
+                            <td th:text="${p.nombre}"></td>
+                            <td th:text="${p.cargo}"></td>
+                            <td th:text="${p.correo}"></td>
+                            <td th:text="${p.extension}"></td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-warning" th:onclick="abrirModalDirectorio([[${p.id}]])">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <a th:href="@{/consola/directorio/delete/{id}(id=${p.id})}" 
+                                       class="btn btn-outline-danger" 
+                                       onclick="return confirm('¿Eliminar a esta persona del directorio?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="personaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personaModalLabel">Información de Personal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="personaForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="id" name="id">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Ingresa tu nombre">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cargo</label>
+                                <input type="text" class="form-control" id="cargo" name="cargo" required placeholder="Ingresa tu cargo">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correo" name="correo" required placeholder="Ingresa tu correo electrónico">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Extensión</label>
+                                <input type="number" class="form-control" id="extension" name="extension" required placeholder="Ingresa tu extensión">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="guardarPersona(event)">Guardar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/directorio.js}"></script>
+</body>
+</html>

@@ -86,7 +86,7 @@ public class MisionController {
     return "redirect:/consola/misiones";
     }
 
-    // --- API JSON (Para peticiones Asíncronas) ---
+    // API JSON (Para peticiones Asíncronas)
 
     @GetMapping("/api/mision/{id}")
     @ResponseBody
