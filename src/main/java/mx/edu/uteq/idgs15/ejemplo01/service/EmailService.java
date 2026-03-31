@@ -31,8 +31,8 @@ public class EmailService {
 
         // 1. Preparar datos para la plantilla
         Context context = new Context();
-        context.setVariable("nombre", dto.getAsunto());
-        context.setVariable("mensaje", dto.getMensaje());
+        // context.setVariable("nombre", dto.getAsunto());
+        // context.setVariable("mensaje", dto.getMensaje());
         context.setVariable("codigo", (int) (Math.random() * 99999)); // Dato de ejemplo
 
         // 2. Crear el cuerpo del correo procesado el HTML
@@ -40,7 +40,7 @@ public class EmailService {
 
         // 3. Configurar el envío
         helper.setTo(dto.getDestinatario());
-        helper.setSubject("Notificación Especial");
+        helper.setSubject("Recuperación de contraseña");
         helper.setText(htmlContent, true); // TRUE indica que es HTML
 
         mailSender.send(message);

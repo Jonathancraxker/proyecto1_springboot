@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 public class EmailDTO {
     private String destinatario;
     private String asunto;
-    private String mensaje;
+    // private String mensaje;
 
     public String toString() {
         return "EmailSenderDTO{" +
                 "to='" + destinatario + '\'' +
-                ", subject='" + asunto + '\'' +
-                ", body='" + mensaje + '\'' +
+                // ", subject='" + asunto + '\'' +
+                // ", body='" + mensaje + '\'' +
                 '}';
     }
     

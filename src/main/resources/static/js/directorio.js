@@ -64,7 +64,7 @@ async function guardarPersona(event) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) throw new Error('Error al guardar');
+        if (!response.ok) throw new Error('');
         const result = await response.json();
 
         if (result.success) {
@@ -87,6 +87,6 @@ async function guardarPersona(event) {
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Error al guardar: ' + error.message);
+        alert('Error al guardar ' + error.message);
     }
 }

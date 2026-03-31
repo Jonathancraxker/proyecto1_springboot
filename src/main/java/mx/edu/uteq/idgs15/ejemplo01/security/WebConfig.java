@@ -21,7 +21,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
     .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests((authz) -> {
-        authz.requestMatchers("/", "/oferta-educativa", "/mision", "/sitemap", "/login", "/images/**", "/css/**", "/adm", "/other", "/email/**").permitAll()
+        authz.requestMatchers("/", "/oferta-educativa", "/directorio", "/mision", "/sitemap", "/login", "/images/**", "/css/**", "/adm", "/other", "/email/**").permitAll()
         // ADMIN se encarga de todo
         // CORDINADOR se encarga de oferta educativa y divisiones
         // RECTOR se encarga de misiones y directorio

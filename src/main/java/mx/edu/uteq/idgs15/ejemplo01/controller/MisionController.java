@@ -27,19 +27,12 @@ public class MisionController {
     // --- Vista para usuarios finales ---
     @GetMapping("/mision")
     public String misiones(Model model) {
-    List<Mision> todas = misionRepo.findAll();
-    
-    //filtro para obtener solo la misión activa
-    Mision activa = todas.stream()
-            .filter(Mision::getActivo)
-            .findFirst()
-            .orElse(null);
-
+    // Buscamos la misión activa (si existe)
+    Mision activa = misionRepo.findByActivoTrue().orElse(null);
     model.addAttribute("misionActiva", activa);
     return "mision/mision";
     }
 
-    // Listar todos los registros de Misión/Visión en CRUD
     @GetMapping("/consola/misiones")
     public String misionesAdmin(Model model) {
         List<Mision> misiones = misionRepo.findAll();
@@ -82,6 +75,10 @@ public class MisionController {
     if (errors.hasErrors()) {
     return "mision/misionForm";
     }
+    if (mision.isActivo()) {
+        // Si esta misión será la activa, desactivamos el resto primero
+        misionRepo.desactivarTodas();
+    }
     misionRepo.save(mision);
     return "redirect:/consola/misiones";
     }
@@ -107,6 +104,10 @@ public class MisionController {
     }
 
     try {
+    if (mision.isActivo()) {
+        // Si esta misión será la activa, desactivamos el resto
+        misionRepo.desactivarTodas();
+    }
     Mision savedMision = misionRepo.save(mision);
     return ResponseEntity.ok(java.util.Map.of(
     "success", true,

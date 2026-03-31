@@ -2,6 +2,7 @@ package mx.edu.uteq.idgs15.ejemplo01.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class OfertaEducativa {
     private Integer id;
 
     @NotEmpty
+    @Column(unique = true)
     private String nombreOferta;
 
     private String modalidad;

@@ -39,11 +39,11 @@ public class Mision {
 
     private boolean activo;
 
-    public Boolean getActivo() {
-    return activo;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setActivo(Boolean activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 }

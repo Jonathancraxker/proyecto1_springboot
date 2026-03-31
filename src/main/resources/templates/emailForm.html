@@ -13,23 +13,23 @@
     <div class="main-container">
         <div class="card shadow login-card">
             <div class="card-body">
-                <h2 class="text-center mb-4 fw-bold text-secondary">Recuperar cuenta</h2>
+                <h2 class="text-center mb-4 fw-bold text-bold">Recuperación de contraseña</h2>
                 
-                <p class="text-center text-muted small mb-4">Ingresa tu correo para recuperar tu contraseña.</p>
+                <p class="text-start text-muted medium mb-4">Escribe la dirección de correo electrónico para recuperar tu contraseña.</p>
 
                 <form method="POST" th:action="@{/email/enviar}" th:object="${emailDTO}">
                     
                     <div class="mb-3">
-                        <input type="text" class="form-control" th:field="*{destinatario}" id="destinatario" placeholder="Para" required>
+                        <input type="text" class="form-control" th:field="*{destinatario}" id="destinatario" placeholder="Ingresa tu correo" required>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <input type="text" class="form-control" th:field="*{asunto}" id="asunto" placeholder="Asunto" required>
                     </div>
 
                     <div class="mb-4">
                         <textarea class="form-control" th:field="*{mensaje}" id="mensaje" placeholder="Contenido" style="height: 100px" required></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="d-grid">
                         <button class="btn btn-primary btn-lg" type="submit">Enviar</button>

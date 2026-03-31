@@ -2,6 +2,7 @@ package mx.edu.uteq.idgs15.ejemplo01.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
@@ -20,10 +21,11 @@ public class DirectorioPersona {
     @Column(nullable = false, length = 100)
     private String cargo;
 
-    @Column(length = 100)
+    @NotEmpty
+    @Column(length = 100, unique = true)
     private String correo;
 
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private String extension;
 
 }

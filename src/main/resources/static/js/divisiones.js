@@ -101,7 +101,7 @@ if (row) {
     const cells = row.querySelectorAll('td');
     cells[1].textContent = data.nombre;
     cells[2].textContent = data.clave;
-    cells[3].textContent = data.activo ? "Sí" : "No";
+    cells[3].innerHTML = `<span class="${data.activo ? 'badge bg-success' : 'badge bg-danger'}">${data.activo ? 'Sí' : 'No'}</span>`;
 } else {
     setTimeout(() => {
         window.location.reload();
